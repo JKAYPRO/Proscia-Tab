@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "LIS Tab Manager",
+  "version": "1.0",
+  "description": "Ensures only one tab from a specified domain is open.",
+  "permissions": [
+    "tabs",
+    "storage",
+    "notifications"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
