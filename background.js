@@ -1,4 +1,4 @@
-const specifiedDomain = "dx.lis.concentriqdx.development.proscia.com"; // Pre-defined domain
+const specifiedDomain = ""; // Proscia URL 
 let activeTabId = null;
 
 // Listener for tab updates
@@ -29,7 +29,7 @@ function handleTabUpdate(tab) {
   if (activeTabId === null || activeTabId === tab.id) {
     activeTabId = tab.id;
   } else {
-    chrome.tabs.update(activeTabId, { url: tab.url });
+    chrome.tabs.update(activeTabId, { url: tab.url, active: true });
     chrome.tabs.remove(tab.id);
     showNotification('Tab Updated', 'The URL has been updated in the existing tab.');
   }
@@ -40,7 +40,7 @@ function handleTabCreation(tab) {
   if (activeTabId === null) {
     activeTabId = tab.id;
   } else {
-    chrome.tabs.update(activeTabId, { url: tab.url });
+    chrome.tabs.update(activeTabId, { url: tab.url, active: true });
     chrome.tabs.remove(tab.id);
     showNotification('Tab Updated', 'The URL has been updated in the existing tab.');
   }
@@ -50,7 +50,6 @@ function handleTabCreation(tab) {
 function handleOpenOrRefresh(url) {
   if (activeTabId !== null) {
     chrome.tabs.update(activeTabId, { url: url, active: true });
-    showNotification('Tab Updated', 'The URL has been updated in the existing tab.');
   } else {
     openNewTab(url);
   }
@@ -58,7 +57,7 @@ function handleOpenOrRefresh(url) {
 
 // Function to open a new tab with the specified URL
 function openNewTab(url) {
-  chrome.tabs.create({ url: url }, (newTab) => {
+  chrome.tabs.create({ url: url, active: true }, (newTab) => {
     activeTabId = newTab.id;
   });
 }
@@ -82,3 +81,4 @@ function showNotification(title, message) {
     message: message
   });
 }
+
